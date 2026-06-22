@@ -1,0 +1,104 @@
+/* ── Login/Register Styles ── */
+body.login-body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-box, .register-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    width: 400px;
+}
+
+.login-box h2, .register-box h2 {
+    text-align: center;
+    color: #333;
+    margin-top: 0;
+}
+
+.login-box label, .register-box label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #555;
+}
+
+.login-box input, .register-box input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+.login-box input:focus, .register-box input:focus {
+    outline: 2px solid #4CAF50;
+    border-color: #4CAF50;
+}
+
+.login-box button, .register-box button {
+    width: 100%;
+    padding: 12px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.login-box button:hover, .register-box button:hover {
+    background: #388E3C;
+}
+
+.login-link, .register-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.login-link a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.register-link a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.login-link a:hover, .register-link a:hover {
+    text-decoration: underline;
+}
+
+.hint {
+    font-size: 12px;
+    color: #888;
+    margin-top: 3px;
+}
+
+/* ── Alert Messages ── */
+.alert-success {
+    color: green;
+    background: #e6ffe6;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.alert-error {
+    color: red;
+    background: #ffe6e6;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
