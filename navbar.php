@@ -7,7 +7,7 @@ $logged_in = isset($_SESSION['user_id']);
 $username = $_SESSION['username'] ?? '';
 ?>
 <nav class="navbar">
-    <div class="nav-brand">📦 Inventory System</div>
+    <div class="nav-brand">Inventory System</div>
     <div class="nav-links">
         <?php if ($logged_in): ?>
             <a href="index.php" class="nav-link <?php echo $current_page == 'index.php' ? 'active' : ''; ?>">Products</a>

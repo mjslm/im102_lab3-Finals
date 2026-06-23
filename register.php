@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result->num_rows > 0) {
             $errors[] = "Username or email already exists!";
         } else {
-            // Hash the password (encrypt it)
+            // Hash the password using password_hash()
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             
             // Insert new user
@@ -72,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Show errors if any
     if (!empty($errors)) {
         $message = "<div class='alert-error'>";
+        $message .= "<strong>Please fix these errors:</strong><br>";
         foreach ($errors as $error) {
             $message .= "• " . $error . "<br>";
         }
@@ -85,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Register</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="login-body">
+<body class="register-body">
     <div class="register-box">
         <h2>Register Account</h2>
         
@@ -107,7 +108,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="password" name="confirm_password" required>
             
             <button type="submit">Register</button>
-        
+            
+            <div class="login-link">
+                Already have an account? <a href="login.php">Login here</a>
             </div>
         </form>
     </div>

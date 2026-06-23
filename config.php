@@ -3,7 +3,7 @@
 $host = 'localhost';
 $user = 'root';
 $pass = ''; 
-$db   = 'im102_lab3'; // Change this to your database name
+$db   = 'im102_lab3_salomon'; // Your database name
 
 $conn = new mysqli($host, $user, $pass, $db);
 
@@ -13,6 +13,6 @@ if ($conn->connect_error) {
 }
 $conn->set_charset("utf8mb4");
 
-// Start session for login
-session_start();
+// Include authentication functions
+require_once 'auth.php';
 ?>
