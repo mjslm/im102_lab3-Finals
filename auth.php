@@ -1,11 +1,6 @@
 <?php
-// Start session at the top
 session_start();
 
-/**
- * Require user to be logged in
- * Redirects to login.php if not logged in
- */
 function requireLogin() {
     if (!isset($_SESSION['user_id'])) {
         header('Location: login.php');

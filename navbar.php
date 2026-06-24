@@ -1,24 +1,22 @@
 <?php
-// Get current page name
 $current_page = basename($_SERVER['PHP_SELF']);
-
-// Check if user is logged in
-$logged_in = isset($_SESSION['user_id']);
-$username = $_SESSION['username'] ?? '';
+$role_color = isAdmin() ? '#FF9800' : '#4CAF50'; // Orange for admin, Green for staff
 ?>
-<nav class="navbar">
-    <div class="nav-brand">Inventory System</div>
-    <div class="nav-links">
-        <?php if ($logged_in): ?>
-            <a href="index.php" class="nav-link <?php echo $current_page == 'index.php' ? 'active' : ''; ?>">Products</a>
-            <a href="report.php" class="nav-link <?php echo $current_page == 'report.php' ? 'active' : ''; ?>">Reports</a>
-            <a href="add.php" class="nav-link <?php echo $current_page == 'add.php' ? 'active' : ''; ?>">+ Add</a>
-            <span class="nav-separator">|</span>
-            <span class="nav-user"><?php echo htmlspecialchars($username); ?></span>
-            <a href="logout.php" class="nav-logout">Logout</a>
-        <?php else: ?>
-            <a href="login.php" class="nav-link-login <?php echo $current_page == 'login.php' ? 'active' : ''; ?>">Login</a>
-            <a href="register.php" class="nav-link-login <?php echo $current_page == 'register.php' ? 'active' : ''; ?>">Register</a>
-        <?php endif; ?>
-    </div>
+<nav>
+    <a href="index.php" class="<?= $current_page == 'index.php' ? 'active' : '' ?>">Home</a>
+    <a href="products.php" class="<?= $current_page == 'products.php' ? 'active' : '' ?>">Products</a>
+    <a href="report.php" class="<?= $current_page == 'report.php' ? 'active' : '' ?>">Reports</a>
+
+    <?php if (isAdmin()) : ?>
+        <a href="add.php" class="<?= $current_page == 'add.php' ? 'active' : '' ?>">Add</a>
+        <a href="users.php" class="<?= $current_page == 'users.php' ? 'active' : '' ?>">Users</a>
+    <?php endif; ?>
+
+    <span style="margin-left:auto;">
+        <?= getUsername() ?>
+        <span style="background: <?= $role_color ?>; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.75em; font-weight: bold;">
+            <?= $_SESSION['role'] ?>
+        </span>
+        <a href="logout.php">Logout</a>
+    </span>
 </nav>
