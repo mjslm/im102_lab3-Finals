@@ -2,7 +2,7 @@
 $host = 'localhost';
 $user = 'root';
 $pass = ''; 
-$db   = 'im102_lab3';
+$db   = 'im102_lab3_salomon';
 
 $conn = new mysqli($host, $user, $pass, $db);
 

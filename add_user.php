@@ -1,20 +1,17 @@
 <?php
 require_once 'config.php';
-
-// If already logged in, redirect
-if (isLoggedIn()) {
-    header('Location: index.php');
-    exit;
-}
+requireAdmin();
 
 $message = '';
 $username = $email = '';
+$selected_role = 'staff';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirm = $_POST['confirm_password'] ?? '';
+    $selected_role = $_POST['role'] ?? 'staff';
     
     $errors = [];
     
@@ -42,11 +39,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $hashed = password_hash($password, PASSWORD_DEFAULT);
             
-            // Default role is staff
-            $sql = "INSERT INTO users (username, email, password_hash, role) VALUES ('$username', '$email', '$hashed', 'staff')";
+            $sql = "INSERT INTO users (username, email, password_hash, role) VALUES ('$username', '$email', '$hashed', '$selected_role')";
             
             if ($conn->query($sql)) {
-                header('Location: login.php?registered=1');
+                header('Location: users.php?added=1');
                 exit;
             } else {
                 $errors[] = "Database error: " . $conn->error;
@@ -62,29 +58,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
+    <title>Add User</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="register-body">
-    <div class="register-box">
-        <h2>Register</h2>
+<body>
+<?php include 'navbar.php'; ?>
+<div class="register-page">
+    <div class="register-container">
+        <h2>Add New User</h2>
+        <p class="subtitle">Create a new user account</p>
+        
         <?php echo $message; ?>
-        <form method="POST" action="register.php">
-            <label>Username</label>
+        
+        <form method="POST" action="add_user.php">
+            <label>Username <span class="required">*</span></label>
             <input type="text" name="username" value="<?= htmlspecialchars($username) ?>" required>
             <div class="hint">Min 3 characters</div>
-            <label>Email</label>
+            
+            <label>Email <span class="required">*</span></label>
             <input type="email" name="email" value="<?= htmlspecialchars($email) ?>" required>
-            <label>Password</label>
+            
+            <label>Password <span class="required">*</span></label>
             <input type="password" name="password" required>
             <div class="hint">Min 6 characters</div>
-            <label>Confirm Password</label>
+            
+            <label>Confirm Password <span class="required">*</span></label>
             <input type="password" name="confirm_password" required>
-            <button type="submit">Register</button>
-            <div class="login-link">
-                Already have an account? <a href="login.php">Login here</a>
+            
+            <label>Role</label>
+            <select name="role">
+                <option value="staff" <?= $selected_role == 'staff' ? 'selected' : '' ?>>Staff</option>
+                <option value="admin" <?= $selected_role == 'admin' ? 'selected' : '' ?>>Admin</option>
+            </select>
+            
+            <button type="submit" class="btn-submit">Add User</button>
+            <div class="back-link">
+                <a href="users.php">Back to Users</a>
             </div>
         </form>
     </div>
+</div>
 </body>
 </html>

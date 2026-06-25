@@ -2,7 +2,14 @@
 require_once 'config.php';
 requireAdmin();
 
-$users = $conn->query("SELECT id, username, email, role, created_at FROM users ORDER BY id");
+// Get users with product count
+$users = $conn->query("
+    SELECT u.*, COUNT(p.id) AS product_count 
+    FROM users u 
+    LEFT JOIN products p ON u.id = p.added_by 
+    GROUP BY u.id 
+    ORDER BY u.id
+");
 ?>
 <!DOCTYPE html>
 <html>
@@ -68,7 +75,7 @@ $users = $conn->query("SELECT id, username, email, role, created_at FROM users O
 <div class="container">
     <div class="top-bar">
         <h1>User Management</h1>
-        <a href="register.php" class="btn-add">+ Add User</a>
+        <a href="add_user.php" class="btn-add">Add User</a>
     </div>
     
     <?php if (isset($_GET['added'])): ?>
@@ -95,7 +102,8 @@ $users = $conn->query("SELECT id, username, email, role, created_at FROM users O
                     <th>Username</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th>Created At</th>
+                    <th>Products Added</th>
+                    <th>Joined</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -110,12 +118,13 @@ $users = $conn->query("SELECT id, username, email, role, created_at FROM users O
                             <?= htmlspecialchars($user['role']) ?>
                         </span>
                     </td>
+                    <td><?= $user['product_count'] ?></td>
                     <td><?= $user['created_at'] ?></td>
                     <td>
                         <div class="action-buttons">
                             <a href="edit_user.php?id=<?= $user['id'] ?>" class="btn-edit-user">Edit</a>
                             <?php if ($user['id'] != $_SESSION['user_id']): ?>
-                                <a href="delete_user.php?id=<?= $user['id'] ?>" class="btn-delete-user">Delete</a>
+                                <a href="delete_user.php?id=<?= $user['id'] ?>" class="btn-delete-user" onclick="return confirm('Delete this user?')">Delete</a>
                             <?php else: ?>
                                 <span style="color:#999; font-size:0.75em;">(You)</span>
                             <?php endif; ?>

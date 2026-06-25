@@ -11,9 +11,9 @@ body {
     padding: 20px;
 }
 
-/* ── Navbar ── */
+/* ── Navbar (Green Theme) ── */
 nav {
-    background: #222;
+    background: #1B5E20;
     color: white;
     padding: 12px 20px;
     display: flex;
@@ -24,14 +24,14 @@ nav {
 }
 
 nav a {
-    color: #ddd;
+    color: #e8f5e9;
     text-decoration: none;
     padding: 5px 12px;
     border-radius: 4px;
 }
 
 nav a:hover {
-    background: #444;
+    background: #2E7D32;
     color: white;
 }
 
@@ -432,6 +432,127 @@ tr:hover {
     margin-top: 3px;
 }
 
+/* ── Register Page (Centered) ── */
+.register-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+}
+
+.register-container {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    width: 420px;
+    max-width: 100%;
+}
+
+.register-container h2 {
+    text-align: center;
+    color: #1B5E20;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.register-container .subtitle {
+    text-align: center;
+    color: #888;
+    margin-bottom: 25px;
+    font-size: 0.95em;
+}
+
+.register-container label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: #555;
+}
+
+.register-container input,
+.register-container select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-top: 5px;
+    font-size: 15px;
+    box-sizing: border-box;
+    background: #fafafa;
+    transition: all 0.3s;
+}
+
+.register-container input:focus,
+.register-container select:focus {
+    outline: none;
+    border-color: #4CAF50;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.register-container .hint {
+    font-size: 12px;
+    color: #999;
+    margin-top: 3px;
+}
+
+.register-container .required {
+    color: #ef5350;
+}
+
+.register-container .btn-submit {
+    width: 100%;
+    padding: 12px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s;
+}
+
+.register-container .btn-submit:hover {
+    background: #388E3C;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.register-container .login-link {
+    text-align: center;
+    margin-top: 15px;
+    color: #666;
+}
+
+.register-container .login-link a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.register-container .login-link a:hover {
+    text-decoration: underline;
+}
+
+.register-container .back-link {
+    text-align: center;
+    margin-top: 12px;
+}
+
+.register-container .back-link a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.register-container .back-link a:hover {
+    text-decoration: underline;
+}
+
 /* ── Alerts ── */
 .alert-success {
     color: #1B5E20;
@@ -493,19 +614,28 @@ tr:hover {
     font-size: 0.85em;
 }
 
-.dashboard-btn {
-    display: block;
-    padding: 10px;
-    background: #4CAF50;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-bottom: 8px;
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 20px 0;
 }
 
-.dashboard-btn:hover {
-    background: #388E3C;
+.stat-box {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.stat-box .number {
+    font-size: 2em;
+    font-weight: bold;
+    color: #1B5E20;
+}
+
+.stat-box .label {
+    color: #888;
+    font-size: 0.85em;
 }
 
 .logout-btn {
@@ -696,6 +826,9 @@ tr:hover {
     .action-buttons {
         flex-direction: column;
         gap: 3px;
+    }
+    .stats-grid {
+        grid-template-columns: 1fr;
     }
 }
 

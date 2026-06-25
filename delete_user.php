@@ -53,11 +53,3 @@ if (!$user) {
         <button type="submit" style="padding:10px 30px; background:#d32f2f; color:white; border:none; border-radius:5px; cursor:pointer; font-size:0.95em; font-weight:bold;">
             Yes, Delete User
         </button>
-    </form>
-    
-    <a href="users.php" style="display:inline-block; padding:10px 30px; background:#e0e0e0; color:#555; text-decoration:none; border-radius:5px; margin-left:10px; font-size:0.95em;">
-        Cancel
-    </a>
-</div>
-</body>
-</html>

@@ -8,10 +8,12 @@ $category = $_GET['category'] ?? '';
 $sql = "
 SELECT p.id, p.name, p.description, p.price, p.stock, p.created_at,
        c.name AS category,
-       s.name AS supplier
+       s.name AS supplier,
+       u.username AS added_by_name
 FROM products p
 JOIN categories c ON p.category_id = c.id
 JOIN suppliers s ON p.supplier_id = s.id
+LEFT JOIN users u ON p.added_by = u.id
 WHERE 1=1
 ";
 
@@ -65,8 +67,8 @@ $stats = $conn->query($stats_sql)->fetch_assoc();
 <div class="container">
     <div class="top-bar">
         <h1>Products</h1>
-        <?php if (isAdmin()): ?>
-            <a href="add.php" class="btn-add">+ Add Product</a>
+        <?php if (isLoggedIn()): ?>
+            <a href="add.php" class="btn-add">Add Product</a>
         <?php endif; ?>
     </div>
 
@@ -120,38 +122,48 @@ $stats = $conn->query($stats_sql)->fetch_assoc();
                     <th>Stock</th>
                     <th>Category</th>
                     <th>Supplier</th>
+                    <th>Added By</th>
                     <th>Created</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = $result->fetch_assoc()): ?>
-                <tr class="<?= ($row['stock'] < 20) ? 'low-stock' : '' ?>">
-                    <td><?= $row['id'] ?></td>
-                    <td>
-                        <?= htmlspecialchars($row['name']) ?>
-                        <?php if ($row['stock'] < 20): ?>
-                            <span class="low-stock-badge">Low Stock</span>
-                        <?php endif; ?>
-                    </td>
-                    <td><?= htmlspecialchars($row['description']) ?></td>
-                    <td>₱<?= number_format($row['price'], 2) ?></td>
-                    <td><?= $row['stock'] ?></td>
-                    <td><?= htmlspecialchars($row['category']) ?></td>
-                    <td><?= htmlspecialchars($row['supplier']) ?></td>
-                    <td><?= $row['created_at'] ?></td>
-                    <td>
-                        <?php if (isAdmin()): ?>
-                            <div class="action-buttons">
-                                <a href="edit.php?id=<?= $row['id'] ?>" class="btn-edit">Edit</a>
-                                <a href="delete.php?id=<?= $row['id'] ?>" class="btn-delete" onclick="return confirm('Delete this product?')">Delete</a>
-                            </div>
-                        <?php else: ?>
-                            <span class="view-only">View only</span>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <?php endwhile; ?>
+                <?php if ($result->num_rows > 0): ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr class="<?= ($row['stock'] < 20) ? 'low-stock' : '' ?>">
+                        <td><?= $row['id'] ?></td>
+                        <td>
+                            <?= htmlspecialchars($row['name']) ?>
+                            <?php if ($row['stock'] < 20): ?>
+                                <span class="low-stock-badge">Low Stock</span>
+                            <?php endif; ?>
+                        </td>
+                        <td><?= htmlspecialchars($row['description']) ?></td>
+                        <td>₱<?= number_format($row['price'], 2) ?></td>
+                        <td><?= $row['stock'] ?></td>
+                        <td><?= htmlspecialchars($row['category']) ?></td>
+                        <td><?= htmlspecialchars($row['supplier']) ?></td>
+                        <td><?= htmlspecialchars($row['added_by_name'] ?? 'Unknown') ?></td>
+                        <td><?= $row['created_at'] ?></td>
+                        <td>
+                            <?php if (isAdmin()): ?>
+                                <div class="action-buttons">
+                                    <a href="edit.php?id=<?= $row['id'] ?>" class="btn-edit">Edit</a>
+                                    <a href="delete.php?id=<?= $row['id'] ?>" class="btn-delete" onclick="return confirm('Delete this product?')">Delete</a>
+                                </div>
+                            <?php else: ?>
+                                <span class="view-only">View only</span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="10" style="text-align:center; padding:30px; color:#999;">
+                            No products found.
+                        </td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
